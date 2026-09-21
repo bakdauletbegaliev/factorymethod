@@ -13,14 +13,15 @@ public class Main {
     public static void main(String[] args) {
         String deliveryMode;
         String platform;
+        Scanner scanner = new Scanner(System.in);
 
         if (args.length >= 2) {
             deliveryMode = args[0];
             platform = args[1];
         } else {
-            Scanner scanner = new Scanner(System.in);
             System.out.print("Enter delivery mode (ROAD / SEA): ");
             deliveryMode = scanner.hasNextLine() ? scanner.nextLine().trim() : "";
+
             System.out.print("Enter UI platform (WINDOWS / MACOS): ");
             platform = scanner.hasNextLine() ? scanner.nextLine().trim() : "";
         }
@@ -43,8 +44,21 @@ public class Main {
             return;
         }
 
+        System.out.print("Enter cargo (e.g. electronics): ");
+        String cargo = scanner.hasNextLine() ? scanner.nextLine().trim() : "";
+
+        System.out.print("Enter destination (e.g. Barcelona): ");
+        String destination = scanner.hasNextLine() ? scanner.nextLine().trim() : "";
+
+        if (cargo.isEmpty()) {
+            cargo = "electronics";
+        }
+        if (destination.isEmpty()) {
+            destination = "Barcelona";
+        }
+
         DeliveryApplication app = new DeliveryApplication(guiFactory, logistics);
-        app.run("laboratory equipment", "Aktau warehouse");
+        app.run(cargo, destination);
     }
 
     private static Logistics createLogistics(String mode) {
